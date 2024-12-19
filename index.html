@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZIP Extractor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .drop-zone {
+      border: 2px dashed #007bff;
+      padding: 30px;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #f8f9fa;
+      transition: background-color 0.2s;
+    }
+    .drop-zone.drag-over {
+      background-color: #e9ecef;
+    }
+    #output {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ZIP File Extractor</h1>
+    <p>Drag and drop a ZIP file below or click to upload:</p>
+    <div class="drop-zone" id="drop-zone">
+      Drop ZIP file here or click to upload
+    </div>
+    <input type="file" id="file-input" style="display: none;" accept=".zip">
+    <div id="output"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const dropZone = document.getElementById("drop-zone");
+      const fileInput = document.getElementById("file-input");
+      const output = document.getElementById("output");
+
+      // Function to handle ZIP extraction
+      async function extractZip(file) {
+        output.innerHTML = "Extracting files...";
+        const { unzipSync, strFromU8 } = await import("https://cdn.jsdelivr.net/npm/fflate@0.8.0/umd/index.js");
+
+        // Read the file as an array buffer
+        const arrayBuffer = await file.arrayBuffer();
+        const unzipped = unzipSync(new Uint8Array(arrayBuffer));
+
+        output.innerHTML = "<h3>Extracted Files:</h3><ul>";
+        for (const [name, content] of Object.entries(unzipped)) {
+          const fileLink = document.createElement("a");
+          fileLink.href = URL.createObjectURL(
+            new Blob([content], { type: "application/octet-stream" })
+          );
+          fileLink.download = name;
+          fileLink.textContent = name;
+
+          const listItem = document.createElement("li");
+          listItem.appendChild(fileLink);
+          output.appendChild(listItem);
+        }
+        output.innerHTML += "</ul>";
+      }
+
+      // Event listeners
+      dropZone.addEventListener("click", () => fileInput.click());
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropZone.classList.add("drag-over");
+      });
+      dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropZone.classList.remove("drag-over");
+        const file = e.dataTransfer.files[0];
+        if (file && file.name.endsWith(".zip")) {
+          extractZip(file);
+        } else {
+          alert("Please upload a valid ZIP file.");
+        }
+      });
+
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file && file.name.endsWith(".zip")) {
+          extractZip(file);
+        } else {
+          alert("Please upload a valid ZIP file.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
