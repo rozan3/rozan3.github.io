@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROZAN - Projects Portfolio</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col">
+        <header class="border-b border-white-10">
+            <div class="container header-content">
+                <a href="index.html" class="logo">ROZAN</a>
+                <div class="header-actions">
+                    <div class="search-container">
+                        <button id="search-toggle" class="icon-button">
+                            <i data-lucide="search"></i>
+                        </button>
+                        <form id="search-form" class="search-form hidden">
+                            <input type="text" placeholder="Search projects..." id="search-input">
+                        </form>
+                    </div>
+                    <button id="menu-toggle" class="icon-button">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+            <nav id="mobile-menu" class="mobile-menu hidden">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="pages/about.html">About</a></li>
+                    <li><a href="mailto:rozansubedi25@gmail.com?subject=Some%20business%20enquiries%20&body=I%20wanna%20talk%20to%20you.">Contact me</a></li>
+                    <li><a href="pages/social-handles.html">Social Handles</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="flex-grow container">
+            <div class="project-grid">
+                <a href="pages/projects/filmyverse.html" class="project-card">
+                    <div class="project-image">
+                        <img src="images/filmyverse-thumbnail.jpg" alt="FilmyVerse">
+                    </div>
+                    <div class="project-info">
+                        <h3>FilmyVerse</h3>
+                        <p>Premium online streaming platform</p>
+                        <span class="view-project">
+                            View Project Details
+                            <i data-lucide="chevron-right"></i>
+                        </span>
+                    </div>
+                </a>
+                <a href="pages/projects/rozanflix.html" class="project-card">
+                    <div class="project-image">
+                        <img src="images/rozanflix-thumbnail.jpg" alt="RozanFlix">
+                    </div>
+                    <div class="project-info">
+                        <h3>RozanFlix</h3>
+                        <p>Versatile multimedia entertainment hub</p>
+                        <span class="view-project">
+                            View Project Details
+                            <i data-lucide="chevron-right"></i>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <footer class="border-t border-white-10">
+            <div class="container footer-content">
+                <p>Copyright © 2023. All Rights Reserved</p>
+                <p>Made with <span class="heart">♥</span> by Rozan</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+
+  
